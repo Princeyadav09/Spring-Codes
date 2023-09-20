@@ -1,5 +1,8 @@
 package com.food.ordering.system.main;
 
+import com.food.ordering.system.main.DeliveryHandler.CityDelivery;
+import com.food.ordering.system.main.DeliveryHandler.DeliveryHandler;
+import com.food.ordering.system.main.DeliveryHandler.VillageDelivery;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,7 +15,7 @@ public class MainApplication {
 		OrderOperationExecuter orderOperationExecuter = new OrderOperationExecuter();
 
 		Order order1 = orderOperationExecuter.executeOperation(
-				new DineInOrderOperator(new Order()
+				new DineInOrderOperator( Order.getOrder()
 						.setRice("rice")
 						.setRoti("roti")
 						.setPaneer("panner")
@@ -26,23 +29,12 @@ public class MainApplication {
 
 		System.out.println(order1);
 
-		Order order2 = orderOperationExecuter.executeOperation(
-				new TakeOutOrderOperator(new Order()
-						.setRice("rice")
-						.setRoti("roti")
-						.setSalad("salad")));
+		DeliveryHandler city = new CityDelivery();
+		DeliveryHandler village = new VillageDelivery();
+		city.setNext(village);
 
-		System.out.println(order2);
-
-		Order order3 = orderOperationExecuter.executeOperation(
-				new DeliveryOrderOperator(new Order()
-						.setPaneer("panner")
-						.setIcecream("icecream")
-						.setColdrink("coco-cola")
-						.setSalad("salad")));
-
-		System.out.println(order3);
-
+		city.handleDelivery("village");
+		city.handleDelivery("city");
 
 	}
 

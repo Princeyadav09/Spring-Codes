@@ -3,6 +3,7 @@ package com.food.ordering.system.main;
 
 
 public class Order {
+    private static Order order;
 
     private String rice;
     private String roti;
@@ -10,6 +11,22 @@ public class Order {
     private String salad;
     private String coldrink;
     private String icecream;
+
+    private Order(){
+
+    }
+
+    //Lazy way of creating sigelton object...
+    public static Order getOrder(){
+        if(order==null){
+            synchronized(Order.class){
+                if(order==null){
+                    order = new Order();
+                }
+            }
+        }
+        return order;
+    }
 
     public Order setRice(String rice) {
         this.rice = rice;
@@ -42,7 +59,6 @@ public class Order {
     }
 
     public Order build(){
-        Order order = new Order();
         return order;
     }
 
