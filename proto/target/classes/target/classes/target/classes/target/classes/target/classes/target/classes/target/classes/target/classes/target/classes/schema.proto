@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+package com.generatedclass;
+
+message User {
+  string name = 1;
+  string email = 2;
+}
+
+service UserService {
+  //unary - synchronous
+  //client will send one request and server will respond with one response.
+  rpc getUser(User) returns(User){}
+
+}
